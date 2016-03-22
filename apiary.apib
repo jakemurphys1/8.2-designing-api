@@ -3,78 +3,158 @@ HOST: http://polls.apiblueprint.org/
 
 # MajesticThai
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Choose your favorite Thai-style
 
-## Questions Collection [/questions]
+## Dishes Collection [/dishes]
 
-### List All Questions [GET]
+### List All Dishes [GET]
 
 + Response 200 (application/json)
 
         [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
                     {
-                        "choice": "Swift",
-                        "votes": 2048
+                        "Name": "Pizza",
+                         "url": "/questions/1/choices/1",
+                         "Id": 0,
+                        "Description":"Flatbread",
+                        "Cost":8.50,
                     }, {
-                        "choice": "Python",
-                        "votes": 1024
+                        "Name": "Calzone",
+                         "url": "/questions/1/choices/2",
+                         "Id": 1,
+                        "Description":"Folded pizza",
+                        "Cost":9.50,
                     }, {
-                        "choice": "Objective-C",
-                        "votes": 512
+                        "Name": "Spagetti",
+                         "url": "/questions/1/choices/3",
+                         "Id": 2,
+                        "Description":"Angelhair with red sauce",
+                        "Cost":6.50,
                     }, {
-                        "choice": "Ruby",
-                        "votes": 256
+                        "Name": "Lasanga",
+                         "url": "/questions/1/choices/4",
+                         "Id": 3,
+                        "Description":"Absolutely no cat hair",
+                        "Cost":7.50,
                     }
-                ]
-            }
         ]
 
-### Create a New Question [POST]
+## Dish [/dishes/{dish_id}]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
++ Parameters
+    + dish_id (number) - ID of the Dish
+
+### Show a single dish [GET]
+
+Select the single dish you want and the chef will make it.
+
++ Response 200 (application/json)
+
+        {
+            "Name":Pizza,
+            "Id": 0,
+            "Description":"Absolutely no cat hair",
+            "Cost":8.50,
+        }
+        
+### Make an order [POST]
+Recieve an order
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "Id":213234
+            "Time to be ready": "7:45",
+            "Customer":"Ted",
+            "Total":21.50
+            "Dishes":[
+                    "Pizza",
+                    "Lasanga"
+                    ]
         }
 
 + Response 201 (application/json)
 
     + Headers
 
-            Location: /questions/2
+            Location: /orders/1
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "Id":213234,
+                "Time to be ready": "7:45",
+                "Customer":"Ted",
+                "Total":21.50,
+                "Dishes":[
+                        "Pizza",
+                        "Lasanga"
+                         ]
             }
+
+
+## Order Collection [/orders]
+
+### List All Orders [GET]
+
++ Response 200 (application/json)
+
+        [
+                    {
+                        "Id":213234,
+                        "Time to be ready": "7:45",
+                        "Customer":"Ted",
+                        "Total":21.50,
+                        "Dishes":[
+                                    "Pizza",
+                                    "Lasanga"
+                                 ],
+                    }, {
+                        "Id":645676,
+                        "Time to be ready": "5:45",
+                        "Customer":"Bill",
+                        "Total":11.50,
+                        "Dishes":[
+                                    "Pizza",
+                                 ],
+                    }, {
+                        "Id":776898,
+                        "Time to be ready": "6:45",
+                        "Customer":"Suzie",
+                        "Total":31.50,
+                        "Dishes":[
+                                    "Pizza",
+                                    "Lasanga",
+                                    "Calzone"
+                                 ],
+                    }, {
+                      "Id":123456,
+                        "Time to be ready": "4:45",
+                        "Customer":"Ted",
+                        "Total":10.50,
+                        "Dishes":[
+                                    "Lasanga"
+                                 ]
+                    }
+        ]
+
+## Order [/Orders/{order_id}]
+
++ Parameters
+    + dish_id (number) - ID of the Dish
+
+### Show a single order [GET]
+
+See a specific order
+
++ Response 200 (application/json)
+
+        {
+                        "Id":123456,
+                        "Time to be ready": "4:45",
+                        "Customer":"Ted",
+                        "Total":10.50,
+                        "Dishes":[
+                                    "Lasanga"
+                                 ]
+        }
